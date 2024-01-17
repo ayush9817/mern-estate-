@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { SignOutUserStart, SignOutUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, updateUserFailure,updateUserStart,updateUserSuccess } from '../redux/user/userSlice';
+import { SignOutUserFailure, SignOutUserStart, SignOutUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, updateUserFailure,updateUserStart,updateUserSuccess } from '../redux/user/userSlice';
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom'
 import axios from 'axios';
 
 
@@ -31,7 +32,7 @@ const Profile = () => {
         dispatch(SignOutUserSuccess(res.data));
 
       } catch (error) {
-        dispatch(deleteUserFailure(error.response.data.message))
+        dispatch(SignOutUserFailure(error.response.data.message))
       }
   }
 
@@ -121,6 +122,9 @@ const Profile = () => {
         <button className='bg-slate-700 text-white p-3 uppercase rounded-lg hover:opacity-95 disabled:opacity-80'>
           {loading?'Loading...':'Update'}
         </button>
+        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to='/create-listing'>
+         Create Listing
+        </Link>
 
       </form>
       <div className='flex justify-between mt-5'>
